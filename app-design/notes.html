@@ -1,0 +1,218 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Plus+Jakarta+Sans%3Awght%40400%3B500%3B700%3B800"
+    />
+
+    <title>Stitch Design</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="app.js"></script>
+    <script>
+      window.AmmuDiary.applyAllSettings();
+      function renderNotes(filterMood = 'All') {
+        const notes = window.AmmuDiary.getNotes();
+        const list = document.getElementById('notes-list');
+        let filtered = filterMood === 'All' ? notes : notes.filter(n => n.mood === filterMood);
+        list.innerHTML = filtered.length ? filtered.map(note => `
+          <div class="flex items-center gap-4 bg-[#faf9fb] px-4 min-h-[72px] py-2 border-b border-[#ded3e4] cursor-pointer" onclick="window.location='notesDetails.html?id=${note.id}'">
+            <div class="text-[#161019] flex items-center justify-center rounded-lg bg-[#efe9f1] shrink-0 size-12">${note.moodEmoji || '📝'}</div>
+            <div class="flex flex-col justify-center">
+              <p class="text-[#161019] text-base font-medium leading-normal line-clamp-1">${note.title || '(No Title)'}</p>
+              <p class="text-[#7c588d] text-sm font-normal leading-normal line-clamp-2">${note.date || note.createdAt || ''}</p>
+            </div>
+          </div>
+        `).join('') : '<div class="text-[#7c588d] p-4">No notes found.</div>';
+      }
+      document.addEventListener('DOMContentLoaded', function() {
+        // Mood filter
+        document.querySelectorAll('.mood-filter').forEach(btn => {
+          btn.onclick = function() {
+            document.querySelectorAll('.mood-filter').forEach(b => b.classList.remove('bg-[#be7edc]', 'text-white'));
+            this.classList.add('bg-[#be7edc]', 'text-white');
+            renderNotes(this.dataset.mood);
+          };
+        });
+        // Add note button
+        document.getElementById('add-note-btn').onclick = function() {
+          window.location = 'notesNew_Edit.html';
+        };
+        renderNotes();
+      });
+    </script>
+  </head>
+  <body>
+    <div
+      class="relative flex size-full min-h-screen flex-col bg-[#faf9fb] justify-between group/design-root overflow-x-hidden"
+      style='font-family: "Plus Jakarta Sans", "Noto Sans", sans-serif;'
+    >
+      <div>
+        <header class="flex items-center justify-between px-4 py-3 bg-[#faf9fb] border-b border-[#ded3e4]">
+          <h1 class="text-lg font-bold text-[#161019]">Ammu's Diary</h1>
+          <button id="menu-btn" class="p-2 rounded-full hover:bg-[#efe9f1] focus:outline-none">
+            <span class="sr-only">Open settings</span>
+            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <circle cx="5" cy="12" r="2" />
+              <circle cx="12" cy="12" r="2" />
+              <circle cx="19" cy="12" r="2" />
+            </svg>
+          </button>
+        </header>
+        <div class="flex items-center bg-[#faf9fb] p-4 pb-2 justify-between">
+          <h2 class="text-[#161019] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pl-12">My Notes</h2>
+        </div>
+        <div class="flex gap-3 p-3 overflow-x-hidden">
+          <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#be7edc] text-white pl-2 pr-4 mood-filter" data-mood="All">
+            <div class="text-[#161019]">😊</div>
+            <p class="text-sm font-medium leading-normal">All</p>
+          </div>
+          <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#efe9f1] pl-2 pr-4 mood-filter" data-mood="Happy">
+            <div class="text-[#161019]">😃</div>
+            <p class="text-sm font-medium leading-normal">Happy</p>
+          </div>
+          <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#efe9f1] pl-2 pr-4 mood-filter" data-mood="Sad">
+            <div class="text-[#161019]">😢</div>
+            <p class="text-sm font-medium leading-normal">Sad</p>
+          </div>
+          <div class="flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-xl bg-[#efe9f1] pl-2 pr-4 mood-filter" data-mood="Angry">
+            <div class="text-[#161019]">😠</div>
+            <p class="text-sm font-medium leading-normal">Angry</p>
+          </div>
+        </div>
+        <div id="notes-list"></div>
+      </div>
+      <div>
+        <div class="flex justify-end overflow-hidden px-5 pb-5">
+          <button
+            id="add-note-btn"
+            class="flex max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 bg-[#be7edc] text-[#161019] text-base font-bold leading-normal tracking-[0.015em] min-w-0 px-2 gap-4 pl-4 pr-6"
+          >
+            <div class="text-[#161019]" data-icon="Plus" data-size="24px" data-weight="regular">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" fill="currentColor" viewBox="0 0 256 256">
+                <path d="M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z"></path>
+              </svg>
+            </div>
+          </button>
+        </div>
+        <div class="h-5 bg-[#faf9fb]"></div>
+      </div>
+    </div>
+    <footer class="fixed bottom-0 left-0 w-full flex justify-around items-center bg-[#faf9fb] border-t border-[#efe9f1] py-2 z-50">
+      <a href="home.html" class="flex flex-col items-center text-[#7c588d] hover:text-[#be7edc]">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v9a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-4H9v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span class="text-xs">Home</span>
+      </a>
+      <a href="explore.html" class="flex flex-col items-center text-[#7c588d] hover:text-[#be7edc]">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <span class="text-xs">Explore</span>
+      </a>
+      <a href="notes.html" class="flex flex-col items-center text-[#7c588d] hover:text-[#be7edc]">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4"/><path d="M16 2v4"/></svg>
+        <span class="text-xs">Notes</span>
+      </a>
+      <a href="calender.html" class="flex flex-col items-center text-[#7c588d] hover:text-[#be7edc]">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4"/><path d="M8 2v4"/></svg>
+        <span class="text-xs">Calendar</span>
+      </a>
+      <a href="settings.html" class="flex flex-col items-center text-[#7c588d] hover:text-[#be7edc]">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.09a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.09a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <span class="text-xs">Settings</span>
+      </a>
+    </footer>
+    <script>
+      document.getElementById('menu-btn').onclick = function() {
+        window.location.href = 'settings.html';
+      };
+    </script>
+    <script>
+      // Example: Load notes from localStorage and render in notes.html
+      if (window.location.pathname.endsWith('notes.html')) {
+        function renderNotes() {
+          const notes = window.AmmuDiary.getNotes();
+          const container = document.querySelector('.notes-list');
+          if (!container) return;
+          container.innerHTML = '';
+          notes.forEach(note => {
+            const div = document.createElement('div');
+            div.className = 'flex items-center gap-4 bg-[#faf9fb] px-4 min-h-[72px] py-2';
+            div.innerHTML = `
+              <div class="text-[#161019] flex items-center justify-center rounded-lg bg-[#efe9f1] shrink-0 size-12">
+                <span>${note.mood || ''}</span>
+              </div>
+              <div class="flex flex-col justify-center">
+                <p class="text-[#161019] text-base font-medium leading-normal line-clamp-1">${note.title || ''}</p>
+                <p class="text-[#7c588d] text-sm font-normal leading-normal line-clamp-2">${new Date(note.createdAt).toLocaleString()}</p>
+              </div>
+            `;
+            div.onclick = () => window.location.href = `notesDetails.html?id=${note.id}`;
+            container.appendChild(div);
+          });
+        }
+        document.addEventListener('DOMContentLoaded', renderNotes);
+      }
+    </script>
+    <script>
+// Render notes with mood filtering and actions
+if (window.location.pathname.endsWith('notes.html')) {
+  function renderNotes(filterMood = 'All') {
+    const notes = window.AmmuDiary.getNotes();
+    const container = document.querySelector('.notes-list');
+    if (!container) return;
+    container.innerHTML = '';
+    notes.filter(note => filterMood === 'All' || note.mood === filterMood)
+      .forEach(note => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-4 bg-[#faf9fb] px-4 min-h-[72px] py-2 group';
+        div.innerHTML = `
+          <div class="text-[#161019] flex items-center justify-center rounded-lg bg-[#efe9f1] shrink-0 size-12">${note.mood || ''}</div>
+          <div class="flex flex-col justify-center flex-1 cursor-pointer">
+            <p class="text-[#161019] text-base font-medium leading-normal line-clamp-1">${note.title || ''}</p>
+            <p class="text-[#7c588d] text-sm font-normal leading-normal line-clamp-2">${new Date(note.createdAt).toLocaleString()}</p>
+          </div>
+          <button class="edit-btn text-[#be7edc] hidden group-hover:block" title="Edit">✏️</button>
+          <button class="delete-btn text-[#be7edc] hidden group-hover:block" title="Delete">🗑️</button>
+        `;
+        div.querySelector('.flex-1').onclick = () => window.location.href = `notesDetails.html?id=${note.id}`;
+        div.querySelector('.edit-btn').onclick = e => {
+          e.stopPropagation();
+          window.location.href = `notesNew_Edit.html?id=${note.id}`;
+        };
+        div.querySelector('.delete-btn').onclick = e => {
+          e.stopPropagation();
+          if (confirm('Delete this note?')) {
+            window.AmmuDiary.deleteNote(note.id);
+            renderNotes(filterMood);
+          }
+        };
+        container.appendChild(div);
+      });
+  }
+  // Mood filter
+  document.querySelectorAll('.mood-filter').forEach(btn => {
+    btn.onclick = function() {
+      document.querySelectorAll('.mood-filter').forEach(b => b.classList.remove('bg-[#be7edc]', 'text-white'));
+      this.classList.add('bg-[#be7edc]', 'text-white');
+      renderNotes(this.dataset.mood);
+    };
+  });
+  document.addEventListener('DOMContentLoaded', function() {
+    renderNotes();
+  });
+}
+</script>
+    <script>
+const navLinks = document.querySelectorAll('footer a');
+navLinks.forEach(link => {
+  link.onclick = function(e) {
+    e.preventDefault();
+    window.location.href = this.getAttribute('href');
+  };
+});
+</script>
+  </body>
+</html>

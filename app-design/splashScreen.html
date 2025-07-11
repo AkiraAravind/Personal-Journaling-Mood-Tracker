@@ -1,0 +1,214 @@
+<html>
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link
+      rel="stylesheet"
+      as="style"
+      onload="this.rel='stylesheet'"
+      href="https://fonts.googleapis.com/css2?display=swap&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900&amp;family=Plus+Jakarta+Sans%3Awght%40400%3B500%3B700%3B800"
+    />
+    <title>Ammu's Diary</title>
+    <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64," />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <style>
+      /* --- Animated Splash/Intro Styles --- */
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@1&family=Tangerine:wght@700&family=Petit+Formal+Script&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+      html, body {
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: white;
+      }
+      body {
+        min-height: 100vh;
+        min-width: 100vw;
+        background: linear-gradient(120deg, #fff0f6 0%, #e0c3fc 100%);
+        animation: bgGradient 6s ease-in-out;
+      }
+      @keyframes bgGradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .intro-container {
+        font-family: 'Tangerine', cursive;
+        font-size: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        width: 100vw;
+        background: transparent;
+        overflow: hidden;
+        position: relative;
+      }
+      .title-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2rem;
+        z-index: 2;
+      }
+      .ammu-text, .diary-text {
+        display: flex;
+        justify-content: center;
+      }
+      .diary-text {
+        margin-right: 2rem;
+      }
+      .letter {
+        font-family: 'Great Vibes', cursive;
+        background: linear-gradient(120deg, #ff1493 20%, #4b0082 40%, #9400d3 60%, #8a2be2 80%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 10px #fff, 0 0 20px #ff1493, 0 0 30px #9400d3, 0 0 40px #4b0082;
+        transition: transform 0.3s ease, text-shadow 0.3s ease;
+        font-size: 5rem;
+        opacity: 0;
+        position: relative;
+        display: inline-block;
+        animation: letterAppear 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, gradientShift 6s ease infinite;
+      }
+      .letter.ammu { font-family: 'Tangerine', cursive; font-size: 7rem; font-weight: 700; padding: 0 12px; letter-spacing: 8px; }
+      .letter.diary { font-family: 'Petit Formal Script', cursive; font-size: 4.5rem; font-weight: 500; padding: 0 8px; letter-spacing: 4px; }
+      @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+      @keyframes letterAppear { 0% { opacity: 0; transform: scale(0) translateY(50px); filter: blur(5px); } 60% { opacity: 1; transform: scale(1.2) translateY(0); filter: blur(0); } 100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } }
+      .letter:hover { transform: scale(1.2) rotate(5deg); text-shadow: 0 0 15px #fff, 0 0 30px #ff1493, 0 0 45px #9400d3, 0 0 60px #4b0082; }
+      .ammu-text .letter:hover { transform: scale(1.3) rotate(-5deg); }
+      .diary-text .letter:hover { transform: scale(1.2) rotate(10deg); }
+      /* Decorative elements (flowers, butterflies, petals, sparkles) */
+      .decorative-elements { position: absolute; width: 100vw; height: 100vh; pointer-events: none; overflow: hidden; z-index: 1; top: 0; left: 0; }
+      .flowers, .butterflies, .petals, .sparkles { position: absolute; width: 100%; height: 100%; pointer-events: none; }
+      .flower { position: absolute; width: 60px; height: 60px; background: radial-gradient(circle at center, #ff99cc 0%, #ff66b2 50%, #ff3399 100%); border-radius: 50%; opacity: 0.7; animation: flowerBloom 3s ease-out forwards; }
+      .flower-1 { bottom: 10%; left: 15%; animation-delay: 0.2s; }
+      .flower-2 { bottom: 15%; right: 20%; animation-delay: 0.8s; }
+      .flower-3 { bottom: 12%; left: 50%; animation-delay: 1.2s; }
+      @keyframes flowerBloom { 0% { transform: scale(0); opacity: 0; } 50% { transform: scale(0.5); opacity: 0.5; } 100% { transform: scale(1); opacity: 1; } }
+      .butterfly { position: absolute; width: 40px; height: 40px; background-size: contain; background-repeat: no-repeat; opacity: 0.8; }
+      .butterfly-1 { top: 20%; left: 15%; animation: butterflyFloat1 20s infinite ease-in-out; background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f98b.svg'); }
+      .butterfly-2 { top: 40%; right: 20%; animation: butterflyFloat2 25s infinite ease-in-out; background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f98b.svg'); }
+      .butterfly-3 { bottom: 30%; left: 30%; animation: butterflyFloat3 22s infinite ease-in-out; background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/svg/1f98b.svg'); }
+      @keyframes butterflyFloat1 { 0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); } 25% { transform: translate(100px, -50px) rotate(20deg) scale(1.2); } 50% { transform: translate(200px, 0) rotate(-10deg) scale(1); } 75% { transform: translate(100px, 50px) rotate(10deg) scale(0.9); } }
+      @keyframes butterflyFloat2 { 0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); } 25% { transform: translate(-120px, -30px) rotate(-15deg) scale(1.1); } 50% { transform: translate(-200px, -60px) rotate(20deg) scale(1.2); } 75% { transform: translate(-100px, -20px) rotate(-10deg) scale(0.95); } }
+      @keyframes butterflyFloat3 { 0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); } 25% { transform: translate(80px, -40px) rotate(15deg) scale(1.15); } 50% { transform: translate(150px, -80px) rotate(-20deg) scale(1); } 75% { transform: translate(60px, -30px) rotate(10deg) scale(0.9); } }
+      /* Petals animation */
+      .petal {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        background: radial-gradient(circle at 60% 40%, #ffb6d5 60%, #ff69b4 100%);
+        border-radius: 60% 40% 60% 40% / 40% 60% 40% 60%;
+        opacity: 0.7;
+        pointer-events: none;
+        animation: petalFall 6s linear infinite;
+      }
+      @keyframes petalFall {
+        0% { transform: translateY(-40px) rotate(-10deg) scale(0.7); opacity: 0.7; }
+        80% { opacity: 0.8; }
+        100% { transform: translateY(110vh) rotate(30deg) scale(1.1); opacity: 0; }
+      }
+      /* Sparkles animation */
+      .sparkle {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background: radial-gradient(circle, #fff 60%, #ffe0f7 100%);
+        border-radius: 50%;
+        opacity: 0.8;
+        pointer-events: none;
+        animation: sparkleTwinkle 2.5s linear infinite;
+      }
+      @keyframes sparkleTwinkle {
+        0%, 100% { opacity: 0.8; transform: scale(1); }
+        50% { opacity: 0.2; transform: scale(1.4); }
+      }
+      /* Fade out for the whole intro */
+      .fade-out {
+        animation: fadeOut 1s ease forwards;
+      }
+      @keyframes fadeOut {
+        to { opacity: 0; visibility: hidden; }
+      }
+    </style>
+    <script>
+      // Animate each letter in sequence
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.ammu-text .letter').forEach((el, i) => {
+          el.style.animationDelay = (0.1 * i) + 's';
+        });
+        document.querySelectorAll('.diary-text .letter').forEach((el, i) => {
+          el.style.animationDelay = (0.15 * (i+7)) + 's';
+        });
+        // Add petals
+        const petals = document.createDocumentFragment();
+        for (let i = 0; i < 16; i++) {
+          const petal = document.createElement('div');
+          petal.className = 'petal';
+          petal.style.left = Math.random() * 100 + 'vw';
+          petal.style.animationDelay = (Math.random() * 4) + 's';
+          petal.style.top = (Math.random() * 10 - 10) + 'vh';
+          petals.appendChild(petal);
+        }
+        document.querySelector('.petals').appendChild(petals);
+        // Add sparkles
+        const sparkles = document.createDocumentFragment();
+        for (let i = 0; i < 18; i++) {
+          const sparkle = document.createElement('div');
+          sparkle.className = 'sparkle';
+          sparkle.style.left = Math.random() * 100 + 'vw';
+          sparkle.style.top = Math.random() * 100 + 'vh';
+          sparkle.style.animationDelay = (Math.random() * 2) + 's';
+          sparkles.appendChild(sparkle);
+        }
+        document.querySelector('.sparkles').appendChild(sparkles);
+        // After 6 seconds, fade out and go to home.html
+        setTimeout(() => {
+          document.querySelector('.intro-container').classList.add('fade-out');
+          setTimeout(() => {
+            window.location.href = 'home.html';
+          }, 1000);
+        }, 6000);
+      });
+    </script>
+  </head>
+  <body>
+    <div class="intro-container">
+      <div class="decorative-elements">
+        <div class="butterflies">
+          <div class="butterfly butterfly-1"></div>
+          <div class="butterfly butterfly-2"></div>
+          <div class="butterfly butterfly-3"></div>
+        </div>
+        <div class="flowers">
+          <div class="flower flower-1"></div>
+          <div class="flower flower-2"></div>
+          <div class="flower flower-3"></div>
+        </div>
+        <div class="petals"></div>
+        <div class="sparkles"></div>
+      </div>
+      <div class="title-container">
+        <div class="ammu-text">
+          <span class="letter ammu">A</span>
+          <span class="letter ammu">m</span>
+          <span class="letter ammu">m</span>
+          <span class="letter ammu">u</span>
+          <span class="letter ammu">'</span>
+          <span class="letter ammu">s</span>
+        </div>
+        <div class="diary-text">
+          <span class="letter diary">D</span>
+          <span class="letter diary">i</span>
+          <span class="letter diary">a</span>
+          <span class="letter diary">r</span>
+          <span class="letter diary">y</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
